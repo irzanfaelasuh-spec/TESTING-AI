@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <meta name="theme-color" content="#080a12">
+  <meta name="description" content="NOVA AI X - Gemini AI Chat">
+
+  <title>NOVA AI X</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- BACKGROUND VFX -->
+  <div class="ambient">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+
+  <div class="grid"></div>
+
+  <!-- APP -->
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+      <div class="brand">
+        <div class="brand-icon">N</div>
+
+        <div>
+          <div class="brand-title">NOVA</div>
+          <div class="brand-sub">AI X</div>
+        </div>
+      </div>
+
+      <button class="new-chat" id="newChatBtn">
+        <span>＋</span>
+        <span>New Chat</span>
+      </button>
+
+      <div class="side-label">RECENT</div>
+
+      <div id="history" class="history"></div>
+
+      <div class="sidebar-bottom">
+
+        <button class="side-btn" id="settingsBtn">
+          <span>⚙</span>
+          <span>Settings</span>
+        </button>
+
+        <button class="side-btn danger" id="clearBtn">
+          <span>⌫</span>
+          <span>Clear History</span>
+        </button>
+
+      </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+
+        <button class="icon-btn mobile-only" id="menuBtn">
+          ☰
+        </button>
+
+        <div class="model-display">
+
+          <div class="status-dot"></div>
+
+          <div>
+            <div class="model-label">ACTIVE MODEL</div>
+            <div id="modelName">Auto discovery...</div>
+          </div>
+
+        </div>
+
+        <div class="top-actions">
+
+          <button class="icon-btn" id="focusBtn" title="Fullscreen">
+            ⛶
+          </button>
+
+          <button class="icon-btn" id="topSettingsBtn" title="Settings">
+            ⚙
+          </button>
+
+        </div>
+
+      </header>
+
+      <!-- CHAT -->
+      <section class="chat-area">
+
+        <div id="welcome" class="welcome">
+
+          <div class="welcome-glow"></div>
+
+          <div class="nova-logo">
+            <span>N</span>
+          </div>
+
+          <h1>
+            Welcome to <span>NOVA AI</span>
+          </h1>
+
+          <p>
+            Your intelligent Gemini-powered assistant.
+          </p>
+
+          <div class="quick-grid">
+
+            <button class="quick" data-prompt="Explain quantum physics in simple words.">
+              <b>Explain</b>
+              <span>Explain something simply</span>
+            </button>
+
+            <button class="quick" data-prompt="Give me 5 creative project ideas using HTML CSS and JavaScript.">
+              <b>Create</b>
+              <span>Generate creative ideas</span>
+            </button>
+
+            <button class="quick" data-prompt="Help me debug this JavaScript problem.">
+              <b>Code</b>
+              <span>Help with programming</span>
+            </button>
+
+            <button class="quick" data-prompt="Give me a short interesting fact.">
+              <b>Discover</b>
+              <span>Discover something new</span>
+            </button>
+
+          </div>
+
+        </div>
+
+        <!-- MESSAGES -->
+        <div id="messages" class="messages"></div>
+
+      </section>
+
+      <!-- COMPOSER -->
+      <div class="composer-wrap">
+
+        <div class="composer">
+
+          <textarea
+            id="prompt"
+            rows="1"
+            autocomplete="off"
+            placeholder="ASK ANYTHING..."
+          ></textarea>
+
+          <button id="sendBtn" class="send-btn">
+            <span class="send-text">Send</span>
+            <span class="send-icon">➤</span>
+          </button>
+
+        </div>
+
+        <div class="composer-info">
+          <span>Enter to send</span>
+          <span>•</span>
+          <span>Powered by Gemini</span>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <!-- SETTINGS OVERLAY -->
+  <div id="overlay" class="overlay"></div>
+
+  <!-- SETTINGS -->
+  <section id="settingsPanel" class="settings-panel">
+
+    <div class="settings-head">
+
+      <div>
+        <div class="settings-title">NOVA SETTINGS</div>
+        <div class="settings-sub">Configure your AI</div>
+      </div>
+
+      <button id="closeSettings" class="icon-btn">
+        ×
+      </button>
+
+    </div>
+
+
+    <!-- API -->
+    <div class="settings-section">
+
+      <div class="section-title">
+        GEMINI API
+      </div>
+
+      <label>API KEY</label>
+
+      <div class="input-row">
+
+        <input
+          id="apiKey"
+          type="password"
+          placeholder="Paste your Gemini API key"
+          autocomplete="off"
+        >
+
+        <button id="toggleKey" class="mini-btn">
+          Show
+        </button>
+
+      </div>
+
+      <button id="saveKey" class="primary-btn">
+        Save API Key
+      </button>
+
+      <div id="apiStatus" class="api-status">
+        Not connected
+      </div>
+
+    </div>
+
+
+    <!-- MODEL -->
+    <div class="settings-section">
+
+      <div class="section-title">
+        MODEL
+      </div>
+
+      <div class="model-box">
+
+        <div>
+          <small>SELECTED MODEL</small>
+          <strong id="selectedModel">
+            Auto
+          </strong>
+        </div>
+
+        <button id="refreshModel" class="mini-btn">
+          ⟳
+        </button>
+
+      </div>
+
+      <div id="modelStatus" class="model-status">
+        Waiting for API key...
+      </div>
+
+    </div>
+
+
+    <!-- GENERATION -->
+    <div class="settings-section">
+
+      <div class="section-title">
+        GENERATION
+      </div>
+
+      <label>
+        MAX OUTPUT TOKENS
+        <span id="tokenValue">1024</span>
+      </label>
+
+      <input
+        id="tokens"
+        type="range"
+        min="128"
+        max="8192"
+        step="128"
+        value="1024"
+      >
+
+      <label>
+        TEMPERATURE
+        <span id="tempValue">0.7</span>
+      </label>
+
+      <input
+        id="temperature"
+        type="range"
+        min="0"
+        max="2"
+        step="0.1"
+        value="0.7"
+      >
+
+      <label>
+        TOP P
+        <span id="topPValue">0.95</span>
+      </label>
+
+      <input
+        id="topP"
+        type="range"
+        min="0"
+        max="1"
+        step="0.05"
+        value="0.95"
+      >
+
+    </div>
+
+
+    <!-- SYSTEM -->
+    <div class="settings-section">
+
+      <div class="section-title">
+        SYSTEM PROMPT
+      </div>
+
+      <textarea
+        id="systemPrompt"
+        class="system-prompt"
+        placeholder="Tell the AI how to behave..."
+      ></textarea>
+
+    </div>
+
+
+    <!-- OPTIONS -->
+    <div class="settings-section">
+
+      <div class="section-title">
+        EXPERIENCE
+      </div>
+
+      <div class="switch-row">
+        <span>Remember chats</span>
+        <input id="remember" type="checkbox" checked>
+      </div>
+
+      <div class="switch-row">
+        <span>Typing animation</span>
+        <input id="typing" type="checkbox" checked>
+      </div>
+
+      <div class="switch-row">
+        <span>Glow VFX</span>
+        <input id="glow" type="checkbox" checked>
+      </div>
+
+      <div class="switch-row">
+        <span>Compact messages</span>
+        <input id="compact" type="checkbox">
+      </div>
+
+    </div>
+
+
+    <!-- THEME -->
+    <div class="settings-section">
+
+      <div class="section-title">
+        THEME
+      </div>
+
+      <div class="theme-grid">
+
+        <button class="theme active" data-theme="nova">
+          NOVA
+        </button>
+
+        <button class="theme" data-theme="midnight">
+          MIDNIGHT
+        </button>
+
+        <button class="theme" data-theme="mono">
+          MONO
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <button id="resetSettings" class="reset-btn">
+      Reset Settings
+    </button>
+
+  </section>
+
+
+  <!-- TOAST -->
+  <div id="toast" class="toast"></div>
+
+  <!-- SCRIPTS -->
+  <script src="script.js"></script>
+
+</body>
+  </html>
